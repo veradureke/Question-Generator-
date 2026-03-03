@@ -1,0 +1,377 @@
+{
+  "name": "NGSS Skills Tree Workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "modelSource": "inferenceProfile",
+        "model": "global.anthropic.claude-sonnet-4-20250514-v1:0",
+        "options": {}
+      },
+      "id": "b608e0ff-bc94-4088-a275-3bb8e20f0528",
+      "name": "Convert Outline to JSON (Bedrock #2)",
+      "type": "@n8n/n8n-nodes-langchain.lmChatAwsBedrock",
+      "typeVersion": 1.1,
+      "position": [
+        432,
+        944
+      ],
+      "credentials": {
+        "aws": {
+          "id": "9TMWjKxrdKJ4W3cI",
+          "name": "AWS (IAM) account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"title\": \"SkillsTreeOutput\",\n  \"description\": \"Schema for a 3-level NGSS-aligned skills tree: superskill → skills → subskills.\",\n  \"type\": \"object\",\n  \"additionalProperties\": false,\n\n  \"properties\": {\n    \"superskill\": {\n      \"type\": \"string\",\n      \"minLength\": 5,\n      \"description\": \"A single overarching learning goal summarizing the full standards progression.\"\n    },\n\n    \"skills\": {\n      \"type\": \"array\",\n      \"minItems\": 1,\n      \"description\": \"List of major skills derived from the superskill.\",\n      \"items\": {\n        \"type\": \"object\",\n        \"additionalProperties\": false,\n        \"required\": [\"skill\", \"subskills\"],\n\n        \"properties\": {\n          \"skill\": {\n            \"type\": \"string\",\n            \"minLength\": 5,\n            \"description\": \"A major conceptual or procedural skill.\"\n          },\n\n          \"subskills\": {\n            \"type\": \"array\",\n            \"minItems\": 1,\n            \"description\": \"List of observable, teachable subskills for this skill.\",\n            \"items\": {\n              \"type\": \"string\",\n              \"minLength\": 5\n            }\n          }\n        }\n      }\n    }\n  },\n\n  \"required\": [\"superskill\", \"skills\"]\n}\n",
+        "autoFix": true
+      },
+      "id": "0fa580cc-0751-4c21-8b6e-c4117cf5636a",
+      "name": "JSON Schema Parser",
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        560,
+        944
+      ]
+    },
+    {
+      "parameters": {
+        "modelSource": "inferenceProfile",
+        "model": "global.anthropic.claude-sonnet-4-20250514-v1:0",
+        "options": {
+          "temperature": 0.7
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatAwsBedrock",
+      "typeVersion": 1.1,
+      "position": [
+        640,
+        1152
+      ],
+      "id": "53c84cf2-74d5-4230-9517-0d61bf41ef9e",
+      "name": "AWS Bedrock Chat Model",
+      "credentials": {
+        "aws": {
+          "id": "9TMWjKxrdKJ4W3cI",
+          "name": "AWS (IAM) account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -16,
+        624
+      ],
+      "id": "16c98ed9-b224-434a-932c-7987dcc0214b",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "{\n  \"instructions\": \"Create a comprehensive, NGSS-compliant lesson aligned with the standard MS-PS1-1. The lesson must focus on developing and using models to describe the atomic composition of simple molecules and extended structures. Include visual molecular representations, particle-level diagrams, and interactive elements that help students understand how atoms combine to form molecules and repeating structures.\",\n  \"learner\": \"Students in grade 6 in Washington\",\n  \"objectives\": [\n    \"Develop and use models to describe the atomic composition of simple molecules (MS-PS1-1).\",\n    \"Identify different types of atoms and explain how they can combine to form molecules of varying complexity.\",\n    \"Interpret or create diagrams, ball-and-stick models, or digital representations showing molecular composition.\",\n    \"Describe how extended structures (e.g., crystals) consist of repeating subunits of atoms or molecules.\"\n  ],\n  \"standard_id\": \"MS-PS1-1\",\n  \"standard_text\": \"Develop models to describe the atomic composition of simple molecules and extended structures.\",\n  \"returnUrl\": \"https://ciam.dev.k12.com/drafts/resume/course-builder?course=6684&discipline=Science&grade=6&state=WA&subject=Physical%20Science&draft=71bad054-3a6a-4167-a174-3f4093d3f44c\",\n  \"folderId\": null,\n  \"numberOfSections\": 3,\n  \"visualElements\": \"3-5\"\n}\n",
+        "options": {}
+      },
+      "id": "60055751-69a4-4ee4-8da0-bcf4d42dc667",
+      "name": "Input NGSS Text",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        208,
+        720
+      ]
+    },
+    {
+      "parameters": {
+        "modelSource": "inferenceProfile",
+        "model": "global.anthropic.claude-sonnet-4-20250514-v1:0",
+        "options": {
+          "temperature": 0.7
+        }
+      },
+      "id": "719aba49-27a5-4c7d-af9a-dbc9fe2d4ec5",
+      "name": "AWS Bedrock for Questions",
+      "type": "@n8n/n8n-nodes-langchain.lmChatAwsBedrock",
+      "typeVersion": 1.1,
+      "position": [
+        1136,
+        1152
+      ],
+      "credentials": {
+        "aws": {
+          "id": "9TMWjKxrdKJ4W3cI",
+          "name": "AWS (IAM) account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"title\": \"InstructionalContentOutput\",\n  \"type\": \"object\",\n  \"required\": [\"metadata\", \"main_content\", \"assessments\", \"visual_models\"],\n  \"additionalProperties\": false,\n\n  \"properties\": {\n    \"metadata\": {\n      \"type\": \"object\",\n      \"required\": [\"standard_id\", \"grade_band\", \"cognitive_depth\", \"superskill\"],\n      \"additionalProperties\": false,\n      \"properties\": {\n        \"standard_id\": { \"type\": \"string\" },\n        \"grade_band\": { \"type\": \"string\" },\n        \"cognitive_depth\": { \"type\": \"string\" },\n        \"superskill\": { \"type\": \"string\" }\n      }\n    },\n\n    \"main_content\": {\n      \"type\": \"object\",\n      \"minProperties\": 1,\n      \"additionalProperties\": false,\n      \"patternProperties\": {\n        \"^topic_[0-9]+$\": {\n          \"type\": \"object\",\n          \"required\": [\"title\", \"description\", \"subtopics\"],\n          \"additionalProperties\": false,\n          \"properties\": {\n            \"title\": { \"type\": \"string\" },\n            \"description\": { \"type\": \"string\" },\n            \"subtopics\": {\n              \"type\": \"array\",\n              \"minItems\": 1,\n              \"items\": {\n                \"type\": \"object\",\n                \"required\": [\"subskill\", \"details\"],\n                \"additionalProperties\": false,\n                \"properties\": {\n                  \"subskill\": { \"type\": \"string\" },\n                  \"details\": { \"type\": \"string\" }\n                }\n              }\n            }\n          }\n        }\n      }\n    },\n\n    \"assessments\": {\n      \"type\": \"array\",\n      \"minItems\": 1,\n      \"items\": {\n        \"type\": \"object\",\n        \"required\": [\n          \"type\",\n          \"question\",\n          \"subskill_reference\",\n          \"correct_response\"\n        ],\n        \"additionalProperties\": false,\n\n        \"properties\": {\n          \"type\": {\n            \"type\": \"string\",\n            \"enum\": [\n              \"MULTIPLE_CHOICE\",\n              \"SHORT_ANSWER\",\n              \"TRUE_FALSE_WITH_CORRECTION\",\n              \"FILL_IN_THE_BLANK\",\n              \"MATCHING\"\n            ]\n          },\n\n          \"question\": { \"type\": \"string\" },\n          \"subskill_reference\": { \"type\": \"string\" },\n\n          \"correct_response\": { \"type\": \"string\" },\n\n          \"options\": {\n            \"type\": \"array\",\n            \"items\": { \"type\": \"string\" }\n          }\n        }\n      }\n    },\n\n    \"visual_models\": {\n      \"type\": \"array\",\n      \"minItems\": 1,\n      \"items\": {\n        \"type\": \"object\",\n        \"required\": [\n          \"model_title\",\n          \"description\",\n          \"reasoning_purpose\",\n          \"scale_representation\"\n        ],\n        \"additionalProperties\": false,\n        \"properties\": {\n          \"model_title\": { \"type\": \"string\" },\n          \"description\": { \"type\": \"string\" },\n          \"reasoning_purpose\": { \"type\": \"string\" },\n          \"scale_representation\": { \"type\": \"string\" }\n        }\n      }\n    }\n  }\n}\n",
+        "autoFix": true
+      },
+      "id": "3ee73fca-7a24-4bed-84df-edf87efd784d",
+      "name": "Questions JSON Parser",
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        1056,
+        944
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "toJson",
+        "options": {
+          "format": true,
+          "fileName": "=/files/results/questions_only/{{$binary.data.fileName}}_VS_{{$now.format('yyyy-MM-dd_HH-mm-ss')}}-ONLY-CCSS.json  "
+        }
+      },
+      "id": "3a8529a1-26d2-4779-8268-88f4065a35ca",
+      "name": "Convert Questions to JSON File",
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        1424,
+        720
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are an educational assessment designer and curriculum developer. Your task is to generate one complete NGSS-aligned instructional content item using the provided performance expectation and skills tree. You must strictly follow the required JSON schema and all generation rules.\n\n=== NGSS CONTEXT ===\nPerformance Expectation Code: {{ $json.standard_id || \"Unknown Standard\" }}\nSuperskill (Main Learning Goal): {{ $json.output.superskill }}\nSkills and Subskills (Learning Progressions):\n{{ JSON.stringify($json.output.skills, null, 2) }}\n\n=== LEARNING FRAMEWORK ===\nLearning Objective: Translate the superskill, skills, and subskills into clear “Students will be able to…” outcomes.\nGrade Band: Middle School (6–8) unless otherwise specified.\nTarget Cognitive Depth: Emphasize conceptual understanding, model-based reasoning, explanation from evidence, and NGSS Science and Engineering Practices (Developing and Using Models; Analyzing and Interpreting Data; Constructing Explanations).\n\n=== NGSS DESIGN CONSTRAINTS ===\nDo not include high-school chemistry (e.g., valence electrons, bonding energy, symbolic equations).\nFocus on macroscopic and submicroscopic reasoning.\nModels must be descriptive or visual, not symbolic.\nUse only terminology appropriate for grades 6–8.\n\n=== YOUR GENERATION TASK ===\nYou must generate one instructional content item that follows the JSON schema exactly. The item must integrate the superskill, skills, and subskills into structured topics, assessment items, and visual models.\n\nFOLLOW THE JSON SCHEMA EXACTLY\nThe root object must include:\n\n“metadata”\n\n“main_content”\n\n“assessments”\n\n“visual_models”\n\nUse topic keys such as “topic_1”, “topic_2”, etc.\nYour output must be valid JSON only. No markdown, no explanations, no additional text.\n\nBUILD CONTENT FROM THE SKILLS TREE\nEach “topic_n” must correspond to one skill.\nEach “subtopic” must correspond to a subskill.\nInstructional content must be concise, middle-school appropriate, and clearly tied to each subskill.\n\nADDRESS COMMON MISCONCEPTIONS\nYou must explicitly correct the following:\n\nAtoms are not identical to molecules.\n\nSolids do not all share the same internal structure.\n\nMolecules can be complex even when small.\n\nScientific models are not literal pictures of matter.\n\nMisconception correction must appear either in the instructional content or in the assessment items.\n\nGENERATE EXACTLY 5 ASSESSMENT QUESTIONS\n\nUse at least 3 different question types from:\nSHORT_ANSWER, MULTIPLE_CHOICE, TRUE_FALSE_WITH_CORRECTION, MATCHING, FILL_IN_THE_BLANK\n\nEach question must:\n\nAlign to a subskill (“subskill_reference”).\n\nRequire reasoning, data interpretation, or model interpretation.\n\nInclude the required metadata (“correct_response” or “answer_key”).\n\nGENERATE VISUAL MODEL ENTRIES\nCreate {{ $json.visual_count || \"2–3\" }} visual model entries.\nEach must include:\n\nmodel_title\n\ndescription\n\nreasoning_purpose\n\nscale_representation\n\nNGSS QUALITY REQUIREMENTS\nLanguage must match middle-school standards.\nUse NGSS SEPs, Crosscutting Concepts, and Disciplinary Core Ideas.\nAvoid jargon, symbolic chemistry, or nonstandard content.\n\n=== OUTPUT FORMAT RULE ===\nReturn ONLY valid JSON using this schema. No additional text. No markdown.\n\n{\n\"metadata\": {\n\"standard_id\": \"string\",\n\"grade_band\": \"string\",\n\"cognitive_depth\": \"string\",\n\"superskill\": \"string\"\n},\n\"main_content\": {\n\"topic_1\": {\n\"title\": \"string\",\n\"description\": \"string\",\n\"subtopics\": [\n{ \"subskill\": \"string\", \"details\": \"string\" }\n]\n}\n},\n\"assessments\": [\n{\n\"type\": \"MULTIPLE_CHOICE\",\n\"question\": \"string\",\n\"options\": [\"string\"],\n\"correct_response\": \"string\",\n\"subskill_reference\": \"string\"\n}\n],\n\"visual_models\": [\n{\n\"model_title\": \"string\",\n\"description\": \"string\",\n\"reasoning_purpose\": \"string\",\n\"scale_representation\": \"string\"\n}\n]\n}\n\nOnly output the JSON object that matches the schema above.",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        960,
+        720
+      ],
+      "id": "ff89e9f2-ed68-4c52-9bf7-92cd4caeb7ba",
+      "name": "Generate Questions1"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are an educational standards analyst. Your task is to convert the NGSS performance expectation provided below into a 3-level skills tree that expresses the full learning progression for this standard clearly and instructionally.\n\nYour output must follow this EXACT structure:\n\nLevel 1 — Superskill:\nProvide one single overarching learning goal that synthesizes the full intent of the NGSS performance expectation.\n\nLevel 2 — Skills (4–7 items):\nIdentify 4–7 major conceptual or procedural skills, each representing a major component of what students must understand or do to meet the standard.\n\nLevel 3 — Subskills (2–5 per skill):\nFor each Level 2 skill, generate 2–5 observable, teachable learning steps that describe clear student actions using verbs such as: Identify…, Compare…, Use a model to…, Analyze patterns in…, Describe how…, Explain why…. These must reflect middle school NGSS expectations and incorporate relevant Science and Engineering Practices.\n\nSTRICT OUTPUT RULES:\nDo NOT output JSON.\nDo NOT include explanations, commentary, or additional sections.\nOutput only a clean hierarchical outline with headings and bullet points.\n\nYour structure should look like this:\n\nLevel 1 — Superskill:\n[one sentence]\n\nLevel 2 — Skills:\n\nSkill A\n• Subskill 1\n• Subskill 2\n• Subskill 3\n\nSkill B\n• Subskill 1\n• Subskill 2\n• Subskill 3\n\nSTANDARD TO ANALYZE:\n{{ $json.standard_text }}",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        464,
+        720
+      ],
+      "id": "49668c6f-cb29-42d1-ae61-056dade24e1e",
+      "name": "Generate Skills"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $workflow.id }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        928,
+        944
+      ],
+      "id": "7b4a2409-6d83-4b9e-9fcc-1b4611640bb5",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "=/files/results/{{$binary.data.fileName}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        1648,
+        720
+      ],
+      "id": "ccafe6a8-2029-4d17-8e93-d5725e0bb239",
+      "name": "Read/Write Files from Disk"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 2
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        16,
+        848
+      ],
+      "id": "56260903-9d00-4c7c-a87f-b0316233aa50",
+      "name": "Schedule Trigger"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "JSON Schema Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Generate Skills",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert Outline to JSON (Bedrock #2)": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Generate Skills",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Generate Questions1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AWS Bedrock Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "JSON Schema Parser",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Input NGSS Text": {
+      "main": [
+        [
+          {
+            "node": "Generate Skills",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Input NGSS Text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Questions JSON Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Generate Questions1",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AWS Bedrock for Questions": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Questions JSON Parser",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Skills": {
+      "main": [
+        [
+          {
+            "node": "Generate Questions1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Questions1": {
+      "main": [
+        [
+          {
+            "node": "Convert Questions to JSON File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Generate Questions1",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert Questions to JSON File": {
+      "main": [
+        [
+          {
+            "node": "Read/Write Files from Disk",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Input NGSS Text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "5bbcb9ac-eafc-4be0-96df-5004ee3e3d47",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ba4529cca169fa21e1e1ad44e94558149684b70a03db0fcabe5114ad056401b8"
+  },
+  "id": "wPeH2USW3Fdpvwnu",
+  "tags": []
+}

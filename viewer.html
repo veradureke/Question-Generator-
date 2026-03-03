@@ -1,0 +1,484 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Questions Visualizer (with Standards)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    :root{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;line-height:1.4}
+    body{margin:16px;background:#f6f8fa;color:#111}
+    header{display:flex;gap:12px;align-items:center;margin-bottom:12px}
+    h1{font-size:18px;margin:0}
+    .controls{margin-left:auto;display:flex;gap:8px;align-items:center}
+    input[type="search"], select{padding:6px 8px;border-radius:6px;border:1px solid #d0d7de}
+    button{padding:6px 10px;border-radius:6px;border:1px solid #9aa4b2;background:white;cursor:pointer}
+    button.primary{background:#0366d6;color:white;border-color:#0366d6}
+    .summary{margin-bottom:12px;color:#444}
+    .metadata{background:#fff;border:1px solid #e6eef8;padding:10px;border-radius:8px;margin-bottom:12px;display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap}
+    .meta-col{min-width:180px}
+    .standards-list{display:flex;gap:6px;flex-wrap:wrap}
+    .std-pill{background:#0b5fff;color:white;padding:6px 8px;border-radius:6px;font-size:13px}
+    .list{display:grid;gap:8px}
+    .card{background:white;border:1px solid #e1e4e8;padding:12px;border-radius:8px;box-shadow:0 1px 0 rgba(9,30,66,0.04)}
+    .meta{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+    .pill{background:#f1f8ff;border:1px solid #cfe3ff;padding:4px 8px;border-radius:999px;font-size:13px;color:#0366d6}
+    .question-title{display:flex;gap:8px;align-items:center;justify-content:space-between}
+    .qtext{font-weight:600}
+    .section{margin-top:8px;padding-top:8px;border-top:1px dashed #eef2f6}
+    ul.options{list-style:none;padding:0;margin:8px 0 0 0}
+    ul.options li{padding:6px;border-radius:6px;margin-bottom:6px;border:1px solid #eef2f6;background:#fbfdff}
+    .correct{background:#e6ffed;border-color:#b7f5c7}
+    .rawjson{white-space:pre-wrap;background:#0b1220;color:#e6edf3;padding:12px;border-radius:8px;overflow:auto;font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Segoe UI Mono", monospace;font-size:13px}
+    .controls small{color:#555}
+    .hidden{display:none}
+    .file-ui{display:flex;gap:8px;align-items:center;margin-bottom:12px}
+    footer{margin-top:18px;color:#666;font-size:13px}
+    @media (max-width:640px){header{flex-direction:column;align-items:flex-start}.controls{margin-left:0}}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Questions Visualizer (with Standards)</h1>
+    <div class="controls">
+      <input id="search" type="search" placeholder="Search text, skill, subskill..." />
+      <select id="typeFilter" title="Filter by question type">
+        <option value="all">All types</option>
+        <option value="multiple_choice">Multiple choice</option>
+        <option value="short_answer">Short answer</option>
+        <option value="true_false_with_correction">True/False</option>
+        <option value="matching">Matching</option>
+        <option value="fill_in_the_blank">Fill in the blank</option>
+      </select>
+      <button id="toggleRaw">Show raw JSON</button>
+      <button id="download" class="primary" disabled>Download JSON</button>
+    </div>
+  </header>
+
+  <div class="file-ui">
+    <div>
+      <strong>Auto-load:</strong> this page will try to load <code>questions (3).json</code> from the same folder on load.
+    </div>
+    <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
+      <input id="fileInput" type="file" accept=".json,application/json" />
+      <button id="reloadDefault">Reload default file</button>
+    </div>
+  </div>
+
+  <div id="metadataPanel" class="metadata hidden" aria-hidden="true">
+    <div class="meta-col">
+      <div style="font-weight:700">Grade level</div>
+      <div id="gradeLevel" style="margin-top:6px;color:#16325c">—</div>
+    </div>
+    <div class="meta-col" style="flex:1">
+      <div style="font-weight:700">Standards</div>
+      <div id="standards" class="standards-list" style="margin-top:8px"></div>
+    </div>
+    <div style="min-width:220px">
+      <div style="font-weight:700">Cognitive focus</div>
+      <div id="cognitiveFocus" style="margin-top:6px;color:#16325c">—</div>
+    </div>
+  </div>
+
+  <div class="summary" id="summary">Loading...</div>
+
+  <div id="list" class="list"></div>
+
+  <div id="raw" class="rawjson hidden" aria-hidden="true"></div>
+
+  <footer>
+    If the JSON doesn't load automatically when opening via file://, choose the JSON with the file picker above or serve the folder with a small local HTTP server (recommended).
+  </footer>
+
+  <script>
+    // Utility to escape HTML
+    function escapeHtml(s) {
+      if (!s && s !== '') return '';
+      return String(s)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+    }
+
+    // Try to extract questions array and metadata from different wrapper shapes
+    function tryExtractQuestions(obj) {
+      if (!obj) return { questions: [], metadata: null };
+      // If array wrapper like your file: [ { output: { metadata:..., questions: [...] } } ]
+      if (Array.isArray(obj)) {
+        if (obj.length === 1 && obj[0] && obj[0].output) {
+          const md = obj[0].output.metadata || null;
+          return { questions: obj[0].output.questions || [], metadata: md };
+        }
+        // If the array itself is a list of question objects
+        if (obj.length > 0 && (obj[0].skill || obj[0].question_type || obj[0].multiple_choice || obj[0].short_answer)) {
+          return { questions: obj, metadata: null };
+        }
+        // fallback: return array as questions
+        return { questions: obj, metadata: null };
+      }
+      if (obj.output && Array.isArray(obj.output.questions)) return { questions: obj.output.questions, metadata: obj.output.metadata || null };
+      if (Array.isArray(obj.questions)) return { questions: obj.questions, metadata: obj.metadata || null };
+      // find first potential questions array in object
+      for (const k of Object.keys(obj)) {
+        if (Array.isArray(obj[k]) && obj[k].length>0 && (obj[k][0].skill || obj[k][0].question_type || obj[k][0].multiple_choice || obj[k][0].short_answer)) {
+          return { questions: obj[k], metadata: obj.metadata || null };
+        }
+      }
+      return { questions: [], metadata: null };
+    }
+
+    // State
+    let rawData = null;
+    let questions = [];
+    let metadata = null;
+
+    // Elements
+    const listEl = document.getElementById('list');
+    const summaryEl = document.getElementById('summary');
+    const rawEl = document.getElementById('raw');
+    const toggleRawBtn = document.getElementById('toggleRaw');
+    const downloadBtn = document.getElementById('download');
+    const searchInput = document.getElementById('search');
+    const typeFilter = document.getElementById('typeFilter');
+    const fileInput = document.getElementById('fileInput');
+    const reloadDefaultBtn = document.getElementById('reloadDefault');
+    const metadataPanel = document.getElementById('metadataPanel');
+    const gradeLevelEl = document.getElementById('gradeLevel');
+    const standardsEl = document.getElementById('standards');
+    const cognitiveFocusEl = document.getElementById('cognitiveFocus');
+
+    function renderMetadata(md) {
+      if (!md) {
+        metadataPanel.classList.add('hidden');
+        metadataPanel.setAttribute('aria-hidden', 'true');
+        return;
+      }
+      metadataPanel.classList.remove('hidden');
+      metadataPanel.setAttribute('aria-hidden', 'false');
+
+      gradeLevelEl.textContent = md.grade_level || md.grade || '—';
+      cognitiveFocusEl.textContent = md.cognitive_focus || md.focus || '—';
+
+      // standards may be array or string
+      standardsEl.innerHTML = '';
+      const sts = Array.isArray(md.standards) ? md.standards : (typeof md.standards === 'string' ? [md.standards] : (md.standards || []));
+      if (sts.length === 0 && md.standard) {
+        sts.push(md.standard);
+      }
+      if (sts.length === 0) {
+        const no = document.createElement('div');
+        no.style.color = '#666';
+        no.textContent = '—';
+        standardsEl.appendChild(no);
+      } else {
+        sts.forEach(s => {
+          const pill = document.createElement('div');
+          pill.className = 'std-pill';
+          pill.textContent = s;
+          standardsEl.appendChild(pill);
+        });
+      }
+    }
+
+    function render() {
+      listEl.innerHTML = '';
+      if (!questions || questions.length === 0) {
+        summaryEl.textContent = 'No questions to show.';
+        downloadBtn.disabled = true;
+        return;
+      }
+      const qcount = questions.length;
+      const filterText = (searchInput.value || '').toLowerCase().trim();
+      const type = typeFilter.value;
+
+      let shown = 0;
+      questions.forEach((q, idx) => {
+        // Support multiple schema keys
+        const mc = q.multiple_choice || (q.question_type === 'MULTIPLE_CHOICE' && q.multiple_choice) || (q.question_type === 'MULTIPLE_CHOICE' && q.options ? { question: q.prompt || q.question, options: q.options, correct_answer: (q.options && q.options.find(o=>o.correct)) ? q.options.find(o=>o.correct).text : q.correct_answer } : null);
+        const sa = q.short_answer || (q.question_type === 'SHORT_ANSWER' && q.short_answer) || (q.question_type === 'SHORT_ANSWER' && q.prompt ? { question: q.prompt, sample_answer: q.expected_answer || '' } : null);
+
+        // Some items use 'prompt' field and different structure; derive display text
+        const displayPrompt = q.prompt || q.question || (mc && mc.question) || (sa && sa.question) || '';
+
+        const combined = [
+          q.skill, q.subskill, q.question_type, displayPrompt,
+          mc && mc.question, mc && mc.options && mc.options.map(o => (o.text || o)).join(' '), mc && mc.correct_answer,
+          sa && sa.question, sa && sa.sample_answer,
+          JSON.stringify(q)
+        ].filter(Boolean).join(' ').toLowerCase();
+
+        if (filterText && !combined.includes(filterText)) return;
+        if (type !== 'all') {
+          if (type === 'multiple_choice' && !mc) return;
+          if (type === 'short_answer' && !sa) return;
+          if (type !== 'multiple_choice' && type !== 'short_answer' && q.question_type && q.question_type.toLowerCase() !== type.toLowerCase()) return;
+        }
+
+        shown++;
+        const card = document.createElement('div');
+        card.className = 'card';
+
+        const meta = document.createElement('div');
+        meta.className = 'meta';
+        const skillPill = document.createElement('div');
+        skillPill.className = 'pill';
+        skillPill.textContent = q.skill || (q.output && q.output.skill) || '—';
+        const subPill = document.createElement('div');
+        subPill.className = 'pill';
+        subPill.style.background = '#fff7ed';
+        subPill.style.color = '#7a4a00';
+        subPill.style.border = '1px solid #ffd8a8';
+        subPill.textContent = q.subskill || '—';
+        meta.appendChild(skillPill);
+        meta.appendChild(subPill);
+
+        // If per-question standards exist, add them to the meta area
+        if (q.standards || q.metadata && q.metadata.standards) {
+          const perStd = q.standards || q.metadata && q.metadata.standards;
+          const perEl = document.createElement('div');
+          perEl.style.marginLeft = 'auto';
+          perEl.style.display = 'flex';
+          perEl.style.gap = '6px';
+          const arr = Array.isArray(perStd) ? perStd : [perStd];
+          arr.slice(0,3).forEach(s => {
+            const sp = document.createElement('div');
+            sp.className = 'pill';
+            sp.style.background = '#eefcf3';
+            sp.style.color = '#0a6b25';
+            sp.textContent = s;
+            perEl.appendChild(sp);
+          });
+          meta.appendChild(perEl);
+        }
+
+        const title = document.createElement('div');
+        title.className = 'question-title';
+
+        const qtext = document.createElement('div');
+        qtext.innerHTML = `<div class="qtext">Question ${idx+1}</div><div style="color:#333;margin-top:6px">${escapeHtml(displayPrompt)}</div>`;
+        title.appendChild(qtext);
+
+        const actions = document.createElement('div');
+        const toggleBtn = document.createElement('button');
+        toggleBtn.textContent = 'Expand';
+        actions.appendChild(toggleBtn);
+        title.appendChild(actions);
+
+        const details = document.createElement('div');
+        details.className = 'hidden';
+
+        toggleBtn.onclick = () => {
+          const open = details.classList.toggle('hidden');
+          toggleBtn.textContent = open ? 'Collapse' : 'Expand';
+        };
+
+        // Render based on question_type if available (more robust)
+        const qtype = (q.question_type || '').toLowerCase();
+
+        if (qtype === 'multiple_choice' || mc) {
+          const s = document.createElement('div');
+          s.className = 'section';
+          s.innerHTML = `<strong>Multiple choice</strong>`;
+          const qdiv = document.createElement('div');
+          qdiv.style.marginTop = '6px';
+          qdiv.textContent = mc && mc.question ? mc.question : (q.prompt || q.question || '');
+          s.appendChild(qdiv);
+
+          const ol = document.createElement('ul');
+          ol.className = 'options';
+          const opts = (mc && mc.options) || q.options || [];
+          // options may be array of strings or objects
+          opts.forEach(opt => {
+            const li = document.createElement('li');
+            const text = (typeof opt === 'string') ? opt : (opt.text || opt);
+            li.textContent = text;
+            const isCorrect = (mc && mc.correct_answer && text === mc.correct_answer) || (opt && opt.correct === true) || (opt && opt.letter && mc && mc.correct_answer && opt.letter === mc.correct_answer);
+            if (isCorrect) li.classList.add('correct');
+            ol.appendChild(li);
+          });
+          s.appendChild(ol);
+
+          const corrText = (mc && mc.correct_answer) || q.correct_answer || '';
+          if (corrText) {
+            const corr = document.createElement('div');
+            corr.style.marginTop = '6px';
+            corr.innerHTML = `<em>Correct answer:</em> <strong>${escapeHtml(corrText)}</strong>`;
+            s.appendChild(corr);
+          }
+          details.appendChild(s);
+        }
+
+        // Short answer / others
+        if (qtype === 'short_answer' || sa) {
+          const s2 = document.createElement('div');
+          s2.className = 'section';
+          s2.innerHTML = `<strong>Short answer</strong>`;
+          const qdiv = document.createElement('div');
+          qdiv.style.marginTop = '6px';
+          qdiv.textContent = sa && sa.question ? sa.question : (q.prompt || q.question || '');
+          s2.appendChild(qdiv);
+
+          const sample = document.createElement('div');
+          sample.style.marginTop = '8px';
+          sample.style.padding = '8px';
+          sample.style.background = '#f8fafb';
+          sample.style.border = '1px solid #eef2f6';
+          sample.textContent = (sa && sa.sample_answer) || (q.short_answer && q.short_answer.sample_answer) || (q.expected_answer || '');
+          s2.appendChild(sample);
+          details.appendChild(s2);
+        }
+
+        // True/False with correction
+        if (q.true_false_with_correction || qtype === 'true_false_with_correction') {
+          const block = document.createElement('div');
+          block.className = 'section';
+          block.innerHTML = `<strong>True / False</strong>`;
+          const tf = q.true_false_with_correction || q;
+          const tv = tf.correct_answer === true || tf.correct_answer === false ? tf.correct_answer : (tf.correct_answer || q.correct_answer);
+          block.innerHTML += `<div style="margin-top:6px">${escapeHtml(q.prompt || q.question || '')}</div>`;
+          const corr = document.createElement('div');
+          corr.style.marginTop = '8px';
+          corr.style.padding = '8px';
+          corr.style.background = '#f8fafb';
+          corr.style.border = '1px solid #eef2f6';
+          corr.innerHTML = `<em>Correct:</em> <strong>${tv}</strong><div style="margin-top:6px">${escapeHtml(tf.correction || tf.correction_text || '')}</div>`;
+          block.appendChild(corr);
+          details.appendChild(block);
+        }
+
+        // Matching / fill in the blank
+        if (q.matching || qtype === 'matching') {
+          const block = document.createElement('div');
+          block.className = 'section';
+          block.innerHTML = `<strong>Matching</strong>`;
+          const pairs = q.matching && q.matching.pairs ? q.matching.pairs : (q.pairs || []);
+          const ul = document.createElement('ul');
+          ul.style.paddingLeft = '18px';
+          pairs.forEach(p => {
+            const li = document.createElement('li');
+            li.innerHTML = `<strong>${escapeHtml(p.left || p.question || '')}</strong> → ${escapeHtml(p.right || p.answer || '')}`;
+            ul.appendChild(li);
+          });
+          block.appendChild(ul);
+          details.appendChild(block);
+        }
+
+        if (q.fill_in_the_blank || qtype === 'fill_in_the_blank') {
+          const block = document.createElement('div');
+          block.className = 'section';
+          block.innerHTML = `<strong>Fill in the blank</strong>`;
+          block.innerHTML += `<div style="margin-top:6px">${escapeHtml(q.prompt || q.question || '')}</div>`;
+          const blanks = (q.fill_in_the_blank && q.fill_in_the_blank.blanks) || (q.blanks) || [];
+          const ul = document.createElement('ul');
+          ul.style.paddingLeft = '18px';
+          blanks.forEach(b => {
+            ul.appendChild(Object.assign(document.createElement('li'), { textContent: `Blank ${b.blank_number}: acceptable answers: ${Array.isArray(b.acceptable_answers) ? b.acceptable_answers.join(', ') : b.acceptable_answers || ''}` }));
+          });
+          block.appendChild(ul);
+          details.appendChild(block);
+        }
+
+        // Attach everything
+        card.appendChild(meta);
+        card.appendChild(title);
+        card.appendChild(details);
+        listEl.appendChild(card);
+      });
+
+      summaryEl.textContent = `Total questions: ${qcount} · Shown: ${shown}`;
+      downloadBtn.disabled = false;
+    }
+
+    function loadFromObject(obj) {
+      rawData = obj;
+      const extracted = tryExtractQuestions(obj);
+      questions = extracted.questions || [];
+      metadata = extracted.metadata || (obj && obj.metadata) || null;
+      renderMetadata(metadata);
+      render();
+      rawEl.textContent = JSON.stringify(rawData, null, 2);
+    }
+
+    // Attempt to fetch default file on load
+    async function tryLoadDefault() {
+      const defaultPath = './questions (3).json';
+      summaryEl.textContent = 'Attempting to load ' + defaultPath + '...';
+      try {
+        const resp = await fetch(defaultPath);
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        const parsed = await resp.json();
+        loadFromObject(parsed);
+        summaryEl.textContent = 'Loaded ' + defaultPath;
+      } catch (err) {
+        // Could be blocked by file:// security or not found; fall back to file picker message
+        summaryEl.textContent = 'Could not auto-load default file (browser may block local fetch). Use the file picker to load JSON.';
+        console.warn('Auto-load failed:', err);
+      }
+    }
+
+    // Wire UI
+    fileInput.addEventListener('change', (ev) => {
+      const f = ev.target.files && ev.target.files[0];
+      if (!f) return;
+      const reader = new FileReader();
+      summaryEl.textContent = 'Loading file...';
+      reader.onload = () => {
+        try {
+          const parsed = JSON.parse(reader.result);
+          loadFromObject(parsed);
+          summaryEl.textContent = 'Loaded ' + f.name;
+        } catch (err) {
+          summaryEl.textContent = 'Error parsing JSON: ' + err.message;
+        }
+      };
+      reader.onerror = () => summaryEl.textContent = 'Error reading file';
+      reader.readAsText(f, 'utf-8');
+    });
+
+    reloadDefaultBtn.addEventListener('click', () => tryLoadDefault());
+
+    // Raw JSON toggle
+    toggleRawBtn.addEventListener('click', () => {
+      const showing = !rawEl.classList.contains('hidden');
+      if (showing) {
+        rawEl.classList.add('hidden');
+        rawEl.setAttribute('aria-hidden', 'true');
+        toggleRawBtn.textContent = 'Show raw JSON';
+      } else {
+        rawEl.classList.remove('hidden');
+        rawEl.setAttribute('aria-hidden', 'false');
+        if (rawData) rawEl.textContent = JSON.stringify(rawData, null, 2);
+        toggleRawBtn.textContent = 'Hide raw JSON';
+      }
+    });
+
+    // Download JSON
+    downloadBtn.addEventListener('click', () => {
+      if (!rawData) return;
+      const blob = new Blob([JSON.stringify(rawData, null, 2)], {type: 'application/json'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'questions_export.json';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    });
+
+    // Search & filter
+    searchInput.addEventListener('input', () => render());
+    typeFilter.addEventListener('change', () => render());
+
+    // Shortcut focus search with "/"
+    document.addEventListener('keydown', (e) => {
+      if (e.key === '/' && document.activeElement !== searchInput && document.activeElement.tagName !== 'TEXTAREA') {
+        e.preventDefault();
+        searchInput.focus();
+      }
+    });
+
+    // Start: try auto-load default
+    tryLoadDefault();
+  </script>
+</body>
+</html>

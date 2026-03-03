@@ -1,0 +1,492 @@
+{
+  "summary": {
+    "totalAssessments": 25,
+    "correct": 24,
+    "incorrect": 0,
+    "pending": 0,
+    "evaluationDate": "2025-12-01T18:43:16.911Z"
+  },
+  "results": [
+    {
+      "fileName": "_VS_2025-12-01_11-28-16-ONLY-CCSS.json",
+      "type": "MULTIPLE_CHOICE",
+      "question": "A student says that atoms and molecules are basically the same thing. Which statement best explains why this is incorrect?",
+      "correctResponse": "Atoms are individual particles, while molecules are made of two or more atoms bonded together",
+      "subskillReference": "Identify the difference between atoms, molecules, and compounds",
+      "evaluation": {
+        "notes": "",
+        "issues": [],
+        "status": "correct",
+        "timestamp": "2025-12-01T18:29:52.748Z"
+      },
+      "metadata": {
+        "standardId": "Unknown Standard",
+        "gradeBand": "Middle School (6-8)",
+        "cognitiveDepth": "Conceptual understanding, model-based reasoning, explanation from evidence, and NGSS Science and Engineering Practices",
+        "superskill": "Develop models to describe the atomic composition of simple molecules and extended structures"
+      }
+    },
+    {
+      "fileName": "_VS_2025-12-01_11-28-16-ONLY-CCSS.json",
+      "type": "SHORT_ANSWER",
+      "question": "Look at the molecular formula CH4 (methane). Based on this formula, identify the types and numbers of atoms present. Then explain what this tells us about the atomic composition that we cannot see just by looking at the gas.",
+      "correctResponse": "CH4 contains 1 carbon atom and 4 hydrogen atoms. The formula tells us the exact types and numbers of atoms in each molecule, which we cannot determine just by observing the gas because atoms are too small to see directly. The formula also tells us that carbon and hydrogen atoms are chemically bonded together in a specific ratio.",
+      "subskillReference": "Interpret molecular formulas to determine atomic composition",
+      "evaluation": {
+        "notes": "",
+        "issues": [],
+        "status": "correct",
+        "timestamp": "2025-12-01T18:29:59.582Z"
+      },
+      "metadata": {
+        "standardId": "Unknown Standard",
+        "gradeBand": "Middle School (6-8)",
+        "cognitiveDepth": "Conceptual understanding, model-based reasoning, explanation from evidence, and NGSS Science and Engineering Practices",
+        "superskill": "Develop models to describe the atomic composition of simple molecules and extended structures"
+      }
+    },
+    {
+      "fileName": "_VS_2025-12-01_11-28-16-ONLY-CCSS.json",
+      "type": "TRUE_FALSE_WITH_CORRECTION",
+      "question": "True or False: All solid materials have the same internal atomic structure because they are all in the solid state. If false, explain why this statement is incorrect.",
+      "correctResponse": "False. Different solid materials have completely different internal atomic structures. For example, table salt has sodium and chlorine atoms arranged in a cubic pattern, while diamond has carbon atoms arranged in a different three-dimensional network. The arrangement of atoms in the solid determines the material's properties, not just the fact that it's solid.",
+      "subskillReference": "Compare the structural differences between molecules and extended structures",
+      "evaluation": {
+        "notes": "",
+        "issues": [],
+        "status": "correct",
+        "timestamp": "2025-12-01T18:30:04.844Z"
+      },
+      "metadata": {
+        "standardId": "Unknown Standard",
+        "gradeBand": "Middle School (6-8)",
+        "cognitiveDepth": "Conceptual understanding, model-based reasoning, explanation from evidence, and NGSS Science and Engineering Practices",
+        "superskill": "Develop models to describe the atomic composition of simple molecules and extended structures"
+      }
+    },
+    {
+      "fileName": "_VS_2025-12-01_11-28-16-ONLY-CCSS.json",
+      "type": "MATCHING",
+      "question": "Match each atomic particle with its correct location and charge: 1) Proton, 2) Neutron, 3) Electron",
+      "correctResponse": "1-A (Proton: Located in nucleus, positive charge), 2-C (Neutron: Located in nucleus, no charge), 3-B (Electron: Located around nucleus, negative charge)",
+      "subskillReference": "Describe the location and charge of each atomic particle",
+      "evaluation": {
+        "notes": "",
+        "issues": [],
+        "status": "correct",
+        "timestamp": "2025-12-01T18:32:18.217Z"
+      },
+      "metadata": {
+        "standardId": "Unknown Standard",
+        "gradeBand": "Middle School (6-8)",
+        "cognitiveDepth": "Conceptual understanding, model-based reasoning, explanation from evidence, and NGSS Science and Engineering Practices",
+        "superskill": "Develop models to describe the atomic composition of simple molecules and extended structures"
+      }
+    },
+    {
+      "fileName": "_VS_2025-12-01_11-28-16-ONLY-CCSS.json",
+      "type": "FILL_IN_THE_BLANK",
+      "question": "Scientific models are _______ tools that help us understand atomic composition, but they are not _______ pictures of atoms. Even _______ molecules can have complex arrangements, and models must be _______ when new evidence is discovered.",
+      "correctResponse": "useful; literal; small; revised",
+      "subskillReference": "Revise models based on new evidence or observations",
+      "evaluation": {
+        "notes": "",
+        "issues": [],
+        "status": "correct",
+        "timestamp": "2025-12-01T18:32:25.823Z"
+      },
+      "metadata": {
+        "standardId": "Unknown Standard",
+        "gradeBand": "Middle School (6-8)",
+        "cognitiveDepth": "Conceptual understanding, model-based reasoning, explanation from evidence, and NGSS Science and Engineering Practices",
+        "superskill": "Develop models to describe the atomic composition of simple molecules and extended structures"
+      }
+    },
+    {
+      "fileName": "_VS_2025-12-01_11-29-50-ONLY-CCSS.json",
+      "type": "MULTIPLE_CHOICE",
+      "question": "A student claims that atoms and molecules are basically the same thing. Which statement best explains why this claim is incorrect?",
+      "correctResponse": "Atoms are individual particles of elements, while molecules are made of two or more atoms bonded together",
+      "subskillReference": "Define atoms as the smallest units of elements that retain chemical properties",
+      "evaluation": {
+        "notes": "",
+        "issues": [],
+        "status": "correct",
+        "timestamp": "2025-12-01T18:34:33.729Z"
+      },
+      "metadata": {
+        "standardId": "Unknown Standard",
+        "gradeBand": "Middle School (6-8)",
+        "cognitiveDepth": "Conceptual understanding, model-based reasoning, explanation from evidence, and NGSS Science and Engineering Practices",
+        "superskill": "Develop models to describe the atomic composition of simple molecules and extended structures"
+      }
+    },
+    {
+      "fileName": "_VS_2025-12-01_11-29-50-ONLY-CCSS.json",
+      "type": "SHORT_ANSWER",
+      "question": "Look at these molecular formulas: CH4, C2H6, and C3H8. Count the atoms in each formula and explain what pattern you notice in how carbon and hydrogen atoms combine in these compounds.",
+      "correctResponse": "CH4 has 1 carbon and 4 hydrogen atoms. C2H6 has 2 carbon and 6 hydrogen atoms. C3H8 has 3 carbon and 8 hydrogen atoms. The pattern shows that as the number of carbon atoms increases by 1, the number of hydrogen atoms increases by 2. This creates a family of compounds called hydrocarbons with similar properties.",
+      "subskillReference": "Compare atomic ratios in different compounds containing the same elements",
+      "evaluation": {
+        "notes": "",
+        "issues": [],
+        "status": "correct",
+        "timestamp": "2025-12-01T18:34:42.062Z"
+      },
+      "metadata": {
+        "standardId": "Unknown Standard",
+        "gradeBand": "Middle School (6-8)",
+        "cognitiveDepth": "Conceptual understanding, model-based reasoning, explanation from evidence, and NGSS Science and Engineering Practices",
+        "superskill": "Develop models to describe the atomic composition of simple molecules and extended structures"
+      }
+    },
+    {
+      "fileName": "_VS_2025-12-01_11-29-50-ONLY-CCSS.json",
+      "type": "TRUE_FALSE_WITH_CORRECTION",
+      "question": "True or False: All solid materials have the same internal atomic structure because they are all in the solid state. If false, explain why this statement is incorrect.",
+      "correctResponse": "False. Different solid materials have completely different internal atomic structures. For example, diamond has carbon atoms arranged in a strong three-dimensional network making it extremely hard, while graphite has carbon atoms arranged in layers making it soft and slippery. The atomic arrangement, not just the state of matter, determines material properties.",
+      "subskillReference": "Explain how the arrangement of atoms affects material properties",
+      "evaluation": {
+        "notes": "",
+        "issues": [],
+        "status": "correct",
+        "timestamp": "2025-12-01T18:34:50.986Z"
+      },
+      "metadata": {
+        "standardId": "Unknown Standard",
+        "gradeBand": "Middle School (6-8)",
+        "cognitiveDepth": "Conceptual understanding, model-based reasoning, explanation from evidence, and NGSS Science and Engineering Practices",
+        "superskill": "Develop models to describe the atomic composition of simple molecules and extended structures"
+      }
+    },
+    {
+      "fileName": "_VS_2025-12-01_11-29-50-ONLY-CCSS.json",
+      "type": "MATCHING",
+      "question": "Match each substance with its correct atomic composition:",
+      "correctResponse": "Water (H2O): 2 hydrogen atoms, 1 oxygen atom; Carbon dioxide (CO2): 1 carbon atom, 2 oxygen atoms; Methane (CH4): 1 carbon atom, 4 hydrogen atoms; Ammonia (NH3): 1 nitrogen atom, 3 hydrogen atoms",
+      "subskillReference": "Count the number of each type of atom in molecular formulas",
+      "evaluation": {
+        "notes": "",
+        "issues": [],
+        "status": "correct",
+        "timestamp": "2025-12-01T18:34:57.055Z"
+      },
+      "metadata": {
+        "standardId": "Unknown Standard",
+        "gradeBand": "Middle School (6-8)",
+        "cognitiveDepth": "Conceptual understanding, model-based reasoning, explanation from evidence, and NGSS Science and Engineering Practices",
+        "superskill": "Develop models to describe the atomic composition of simple molecules and extended structures"
+      }
+    },
+    {
+      "fileName": "_VS_2025-12-01_11-29-50-ONLY-CCSS.json",
+      "type": "FILL_IN_THE_BLANK",
+      "question": "Scientific models are _______ tools that help us understand atomic composition, but they are not _______ pictures of atoms and molecules. Even _______ molecules can have complex arrangements. Models must be _______ to show different aspects of atomic structure.",
+      "correctResponse": "useful; exact; small; modified",
+      "subskillReference": "Create physical or digital models showing atomic arrangements",
+      "evaluation": {
+        "notes": "",
+        "issues": [],
+        "status": "correct",
+        "timestamp": "2025-12-01T18:35:01.165Z"
+      },
+      "metadata": {
+        "standardId": "Unknown Standard",
+        "gradeBand": "Middle School (6-8)",
+        "cognitiveDepth": "Conceptual understanding, model-based reasoning, explanation from evidence, and NGSS Science and Engineering Practices",
+        "superskill": "Develop models to describe the atomic composition of simple molecules and extended structures"
+      }
+    },
+    {
+      "fileName": "_VS_2025-12-01_13-25-54-ONLY-CCSS.json",
+      "type": "MULTIPLE_CHOICE",
+      "question": "A student builds a model of a water molecule using red and white balls connected by sticks. What does this model primarily help explain?",
+      "correctResponse": "How hydrogen and oxygen atoms are connected in water",
+      "subskillReference": "Explain how models represent the atomic composition of substances",
+      "evaluation": {
+        "notes": "",
+        "issues": [],
+        "status": "correct",
+        "timestamp": "2025-12-01T18:35:07.763Z"
+      },
+      "metadata": {
+        "standardId": "MS-PS1-1",
+        "gradeBand": "Middle School (6-8)",
+        "cognitiveDepth": "Conceptual understanding and model-based reasoning emphasizing NGSS Science and Engineering Practices",
+        "superskill": "Develop and use models to represent and explain how atoms combine to form simple molecules and extended structures"
+      }
+    },
+    {
+      "fileName": "_VS_2025-12-01_13-25-54-ONLY-CCSS.json",
+      "type": "SHORT_ANSWER",
+      "question": "Explain why a carbon atom with 6 protons is always carbon, even if it has different numbers of neutrons or electrons. Use the concept of atomic number in your answer.",
+      "correctResponse": "The atomic number, which is the number of protons, determines the element identity. Since all carbon atoms have 6 protons (atomic number 6), they are always carbon regardless of variations in neutrons or electrons. The number of protons defines what element an atom is.",
+      "subskillReference": "Describe how atomic number determines element identity",
+      "evaluation": {
+        "notes": "",
+        "issues": [],
+        "status": "correct",
+        "timestamp": "2025-12-01T18:35:14.137Z"
+      },
+      "metadata": {
+        "standardId": "MS-PS1-1",
+        "gradeBand": "Middle School (6-8)",
+        "cognitiveDepth": "Conceptual understanding and model-based reasoning emphasizing NGSS Science and Engineering Practices",
+        "superskill": "Develop and use models to represent and explain how atoms combine to form simple molecules and extended structures"
+      }
+    },
+    {
+      "fileName": "_VS_2025-12-01_13-25-54-ONLY-CCSS.json",
+      "type": "TRUE_FALSE_WITH_CORRECTION",
+      "question": "True or False: Atoms and molecules are the same thing. If false, explain the difference.",
+      "correctResponse": "False. Atoms are individual particles made of protons, neutrons, and electrons. Molecules are groups of two or more atoms that are chemically bonded together. For example, a hydrogen atom (H) is different from a water molecule (H2O) which contains two hydrogen atoms and one oxygen atom bonded together.",
+      "subskillReference": "Identify the types and numbers of atoms in molecular formulas",
+      "evaluation": {
+        "notes": "",
+        "issues": [],
+        "status": "correct",
+        "timestamp": "2025-12-01T18:35:19.929Z"
+      },
+      "metadata": {
+        "standardId": "MS-PS1-1",
+        "gradeBand": "Middle School (6-8)",
+        "cognitiveDepth": "Conceptual understanding and model-based reasoning emphasizing NGSS Science and Engineering Practices",
+        "superskill": "Develop and use models to represent and explain how atoms combine to form simple molecules and extended structures"
+      }
+    },
+    {
+      "fileName": "_VS_2025-12-01_13-25-54-ONLY-CCSS.json",
+      "type": "MATCHING",
+      "question": "Match each atomic particle with its correct description:",
+      "correctResponse": "Proton - Positively charged particle found in the nucleus; Neutron - Neutral particle found in the nucleus; Electron - Negatively charged particle that moves around the nucleus",
+      "subskillReference": "Identify the basic components of atoms (protons, neutrons, electrons)",
+      "evaluation": {
+        "status": "correct",
+        "issues": [
+          "Options quality"
+        ],
+        "notes": "needs work on structure of questions ",
+        "timestamp": "2025-12-01T18:35:48.285Z"
+      },
+      "metadata": {
+        "standardId": "MS-PS1-1",
+        "gradeBand": "Middle School (6-8)",
+        "cognitiveDepth": "Conceptual understanding and model-based reasoning emphasizing NGSS Science and Engineering Practices",
+        "superskill": "Develop and use models to represent and explain how atoms combine to form simple molecules and extended structures"
+      }
+    },
+    {
+      "fileName": "_VS_2025-12-01_13-25-54-ONLY-CCSS.json",
+      "type": "FILL_IN_THE_BLANK",
+      "question": "Diamond is extremely hard because its _______ atoms are arranged in a strong three-dimensional _______ where each atom is bonded to multiple _______. This shows how atomic _______ affects material properties.",
+      "correctResponse": "carbon, network, neighbors, arrangement",
+      "subskillReference": "Explain the relationship between atomic arrangement and material properties",
+      "evaluation": {
+        "notes": "",
+        "issues": [],
+        "status": "correct",
+        "timestamp": "2025-12-01T18:36:04.292Z"
+      },
+      "metadata": {
+        "standardId": "MS-PS1-1",
+        "gradeBand": "Middle School (6-8)",
+        "cognitiveDepth": "Conceptual understanding and model-based reasoning emphasizing NGSS Science and Engineering Practices",
+        "superskill": "Develop and use models to represent and explain how atoms combine to form simple molecules and extended structures"
+      }
+    },
+    {
+      "fileName": "_VS_2025-12-01_13-29-41-ONLY-CCSS.json",
+      "type": "MULTIPLE_CHOICE",
+      "question": "Which statement best explains why all carbon atoms are considered the same element even though they may have different numbers of neutrons?",
+      "correctResponse": "They all have the same number of protons",
+      "subskillReference": "Describe how atomic number determines element identity",
+      "evaluation": {
+        "notes": "",
+        "issues": [],
+        "status": "correct",
+        "timestamp": "2025-12-01T18:36:12.182Z"
+      },
+      "metadata": {
+        "standardId": "MS-PS1-1",
+        "gradeBand": "Middle School (6-8)",
+        "cognitiveDepth": "Conceptual understanding and model-based reasoning emphasizing NGSS Science and Engineering Practices",
+        "superskill": "Develop models to describe the atomic composition of simple molecules and extended structures"
+      }
+    },
+    {
+      "fileName": "_VS_2025-12-01_13-29-41-ONLY-CCSS.json",
+      "type": "SHORT_ANSWER",
+      "question": "A student says 'atoms and molecules are basically the same thing.' Explain why this statement is incorrect and describe how atoms and molecules are different.",
+      "correctResponse": "This statement is incorrect because atoms and molecules are different types of particles. Atoms are individual particles made of protons, neutrons, and electrons. Molecules are groups of two or more atoms that are chemically bonded together. For example, an oxygen atom (O) is different from an oxygen molecule (O2), which contains two oxygen atoms bonded together. Molecules have different properties than the individual atoms they contain.",
+      "subskillReference": "Identify atoms present in simple molecular formulas",
+      "evaluation": {
+        "status": "correct",
+        "issues": [],
+        "notes": "repeat",
+        "timestamp": "2025-12-01T18:36:22.677Z"
+      },
+      "metadata": {
+        "standardId": "MS-PS1-1",
+        "gradeBand": "Middle School (6-8)",
+        "cognitiveDepth": "Conceptual understanding and model-based reasoning emphasizing NGSS Science and Engineering Practices",
+        "superskill": "Develop models to describe the atomic composition of simple molecules and extended structures"
+      }
+    },
+    {
+      "fileName": "_VS_2025-12-01_13-29-41-ONLY-CCSS.json",
+      "type": "TRUE_FALSE_WITH_CORRECTION",
+      "question": "True or False: All solid materials have the same type of internal atomic structure. If false, provide a correction.",
+      "correctResponse": "False. Different solid materials have different internal atomic structures. For example, some solids like table salt have atoms arranged in regular crystal lattices, while others like plastic have long chains of molecules. Some solids have atoms connected in three-dimensional networks, while others have layers that can slide past each other. These different structures give solids their different properties.",
+      "subskillReference": "Analyze patterns in how atoms repeat in extended structures",
+      "evaluation": {
+        "status": "correct",
+        "issues": [],
+        "notes": "repeat",
+        "timestamp": "2025-12-01T18:37:16.690Z"
+      },
+      "metadata": {
+        "standardId": "MS-PS1-1",
+        "gradeBand": "Middle School (6-8)",
+        "cognitiveDepth": "Conceptual understanding and model-based reasoning emphasizing NGSS Science and Engineering Practices",
+        "superskill": "Develop models to describe the atomic composition of simple molecules and extended structures"
+      }
+    },
+    {
+      "fileName": "_VS_2025-12-01_13-29-41-ONLY-CCSS.json",
+      "type": "MATCHING",
+      "question": "Match each type of model with its best use for understanding atomic composition:",
+      "correctResponse": "Ball-and-stick model - Shows connections between atoms; Space-filling model - Shows relative sizes of atoms; Crystal lattice model - Shows repeating patterns in solids",
+      "subskillReference": "Compare different model types for representing atomic composition",
+      "evaluation": {
+        "status": "pending",
+        "notes": "work on format ",
+        "issues": [
+          "Options quality"
+        ],
+        "timestamp": "2025-12-01T18:37:27.640Z"
+      },
+      "metadata": {
+        "standardId": "MS-PS1-1",
+        "gradeBand": "Middle School (6-8)",
+        "cognitiveDepth": "Conceptual understanding and model-based reasoning emphasizing NGSS Science and Engineering Practices",
+        "superskill": "Develop models to describe the atomic composition of simple molecules and extended structures"
+      }
+    },
+    {
+      "fileName": "_VS_2025-12-01_13-29-41-ONLY-CCSS.json",
+      "type": "FILL_IN_THE_BLANK",
+      "question": "In ionic bonding, electrons are completely _______ from one atom to another, creating charged particles called _______. In covalent bonding, atoms _______ electrons rather than transferring them. Both types of bonding create _______ that hold atoms together in compounds.",
+      "correctResponse": "transferred, ions, share, forces",
+      "subskillReference": "Compare ionic and covalent bonding patterns",
+      "evaluation": {
+        "notes": "",
+        "issues": [],
+        "status": "correct",
+        "timestamp": "2025-12-01T18:42:08.080Z"
+      },
+      "metadata": {
+        "standardId": "MS-PS1-1",
+        "gradeBand": "Middle School (6-8)",
+        "cognitiveDepth": "Conceptual understanding and model-based reasoning emphasizing NGSS Science and Engineering Practices",
+        "superskill": "Develop models to describe the atomic composition of simple molecules and extended structures"
+      }
+    },
+    {
+      "fileName": "_VS_2025-12-01-111507-ONLY-CCSS.json",
+      "type": "MULTIPLE_CHOICE",
+      "question": "A student claims that atoms and molecules are basically the same thing. Which statement best explains why this is incorrect?",
+      "correctResponse": "Atoms are the basic building blocks, while molecules are made of two or more atoms bonded together",
+      "subskillReference": "Compare the properties of individual atoms to the properties of molecules they form",
+      "evaluation": {
+        "notes": "",
+        "issues": [],
+        "status": "correct",
+        "timestamp": "2025-12-01T18:42:14.069Z"
+      },
+      "metadata": {
+        "standardId": "Unknown Standard",
+        "gradeBand": "Middle School (6-8)",
+        "cognitiveDepth": "Conceptual understanding, model-based reasoning, explanation from evidence, and NGSS Science and Engineering Practices",
+        "superskill": "Develop and use models to represent how atoms combine to form simple molecules and extended structures, demonstrating understanding of atomic composition and bonding patterns"
+      }
+    },
+    {
+      "fileName": "_VS_2025-12-01-111507-ONLY-CCSS.json",
+      "type": "SHORT_ANSWER",
+      "question": "Explain why atoms form chemical bonds. In your answer, describe what atoms are trying to achieve when they bond with other atoms.",
+      "correctResponse": "Atoms form chemical bonds to achieve stable electron configurations. They want to have complete outer electron shells, which makes them more stable. Atoms can achieve this stability by sharing electrons (covalent bonds) or by transferring electrons (ionic bonds) with other atoms.",
+      "subskillReference": "Explain why atoms form bonds to achieve stable electron configurations",
+      "evaluation": {
+        "notes": "",
+        "issues": [],
+        "status": "correct",
+        "timestamp": "2025-12-01T18:42:22.931Z"
+      },
+      "metadata": {
+        "standardId": "Unknown Standard",
+        "gradeBand": "Middle School (6-8)",
+        "cognitiveDepth": "Conceptual understanding, model-based reasoning, explanation from evidence, and NGSS Science and Engineering Practices",
+        "superskill": "Develop and use models to represent how atoms combine to form simple molecules and extended structures, demonstrating understanding of atomic composition and bonding patterns"
+      }
+    },
+    {
+      "fileName": "_VS_2025-12-01-111507-ONLY-CCSS.json",
+      "type": "TRUE_FALSE_WITH_CORRECTION",
+      "question": "True or False: All solid materials have the same internal atomic structure. If false, explain why this statement is incorrect.",
+      "correctResponse": "False. Different solid materials have different internal atomic structures. For example, diamond and graphite are both made of carbon atoms, but the atoms are arranged differently, giving them completely different properties. The arrangement of atoms determines the material's characteristics.",
+      "subskillReference": "Describe how the arrangement of atoms affects the properties of extended structures",
+      "evaluation": {
+        "notes": "",
+        "issues": [],
+        "status": "correct",
+        "timestamp": "2025-12-01T18:43:00.175Z"
+      },
+      "metadata": {
+        "standardId": "Unknown Standard",
+        "gradeBand": "Middle School (6-8)",
+        "cognitiveDepth": "Conceptual understanding, model-based reasoning, explanation from evidence, and NGSS Science and Engineering Practices",
+        "superskill": "Develop and use models to represent how atoms combine to form simple molecules and extended structures, demonstrating understanding of atomic composition and bonding patterns"
+      }
+    },
+    {
+      "fileName": "_VS_2025-12-01-111507-ONLY-CCSS.json",
+      "type": "MATCHING",
+      "question": "Match each subatomic particle with its correct location and charge: 1) Proton, 2) Neutron, 3) Electron. Locations and charges: A) Nucleus, positive charge, B) Around nucleus, negative charge, C) Nucleus, no charge",
+      "correctResponse": "1-A (Proton: Nucleus, positive charge), 2-C (Neutron: Nucleus, no charge), 3-B (Electron: Around nucleus, negative charge)",
+      "subskillReference": "Identify the three main subatomic particles (protons, neutrons, electrons) and their locations within atoms",
+      "evaluation": {
+        "status": "correct",
+        "notes": "",
+        "issues": [
+          "Options quality"
+        ],
+        "timestamp": "2025-12-01T18:43:07.040Z"
+      },
+      "metadata": {
+        "standardId": "Unknown Standard",
+        "gradeBand": "Middle School (6-8)",
+        "cognitiveDepth": "Conceptual understanding, model-based reasoning, explanation from evidence, and NGSS Science and Engineering Practices",
+        "superskill": "Develop and use models to represent how atoms combine to form simple molecules and extended structures, demonstrating understanding of atomic composition and bonding patterns"
+      }
+    },
+    {
+      "fileName": "_VS_2025-12-01-111507-ONLY-CCSS.json",
+      "type": "FILL_IN_THE_BLANK",
+      "question": "Scientific models are not literal pictures of atoms and molecules. Instead, they are _______ tools that help us understand and predict how matter behaves. When new evidence is discovered, scientists _______ their models to make them more accurate.",
+      "correctResponse": "conceptual, modify (or revise/update)",
+      "subskillReference": "Modify models based on new evidence or to better explain observations",
+      "evaluation": {
+        "notes": "",
+        "issues": [],
+        "status": "correct",
+        "timestamp": "2025-12-01T18:43:12.651Z"
+      },
+      "metadata": {
+        "standardId": "Unknown Standard",
+        "gradeBand": "Middle School (6-8)",
+        "cognitiveDepth": "Conceptual understanding, model-based reasoning, explanation from evidence, and NGSS Science and Engineering Practices",
+        "superskill": "Develop and use models to represent how atoms combine to form simple molecules and extended structures, demonstrating understanding of atomic composition and bonding patterns"
+      }
+    }
+  ]
+}
