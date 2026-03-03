@@ -48,6 +48,8 @@ The workflow is modular and enforces strict JSON schema validation to ensure con
   * Content pipelines
   * Educational AI tools
 
+<img width="1696" height="745" alt="image" src="https://github.com/user-attachments/assets/2b25e038-1ee7-4f39-b06f-57bad0bcd139" />
+
 ---
 
 ## Key Features
